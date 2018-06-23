@@ -6,11 +6,11 @@ const express = require('express'),
 	mongoose = require('mongoose'),
 	port = 4000 || process.env.PORT;
 
-// // connect to mlab database
-// mongoose.connect("mongodb://kaz:1a2b3c4d@ds263710.mlab.com:63710/zakscloset");
-// mongoose.connection.once('open', () => {
-// 	console.log('connected to database')
-// });
+// connect to mlab database
+mongoose.connect("mongodb://kaz:1a2b3c4d@ds263710.mlab.com:63710/zakscloset");
+mongoose.connection.once('open', () => {
+	console.log('connected to database')
+});
 
 app.use('/graphql', graphqlHTTP({
 	schema,
