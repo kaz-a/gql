@@ -32,7 +32,8 @@ const BookType = new GraphQLObjectType({
 			type: AuthorType,
 			resolve(parent, args){
 				// // console.log(parent); // logs parent object - books object
-				// return _.find(authors, { id: parent.authorId });
+        // return _.find(authors, { id: parent.authorId });
+        return Author.findById(parent.authorId);
 			}
 		}		
 	})
@@ -47,7 +48,8 @@ const AuthorType = new GraphQLObjectType({
 		books: {
 			type: new GraphQLList(BookType), // BookType would be one book. we need a list of books!
 			resolve(parent, args){
-				// return _.filter(books, { authorId: parent.id })
+        // return _.filter(books, { authorId: parent.id })
+        return Book.find({ authorId: parent.id });
 			}
 		}
 	})
@@ -62,7 +64,8 @@ const RootQuery = new GraphQLObjectType({
 			type: BookType,
 			args: { id: { type: GraphQLID }}, // book(id: '123){ name, genre }
 			resolve(parent, args){ // get data from db/other source (ie. args.id)
-				// return _.find(books, {id: args.id});
+        // return _.find(books, {id: args.id});
+        return Book.findById(args.id)
 			}
 		},
 		// query for an author by id
@@ -70,21 +73,24 @@ const RootQuery = new GraphQLObjectType({
 			type: AuthorType,
 			args: { id: { type: GraphQLID }},
 			resolve(parent, args){
-				// return _.find(authors, { id: args.id });
+        // return _.find(authors, { id: args.id });
+        return Author.findById(args.id)
 			}
 		},
 		// query for all books
 		books: {
 			type: new GraphQLList(BookType), // list of books
 			resolve(parent, args){
-				// return books;
+        // return books;
+        return Book.find({});
 			}
 		},
 		// query for all authors
 		authors: {
 			type: new GraphQLList(AuthorType),
 			resolve(parent, args){
-				// return authors;
+        // return authors;
+        return Author.find({});
 			}
 		}
 	}
@@ -105,7 +111,23 @@ const Mutation = new GraphQLObjectType({
           name: args.name,
           age: args.age
         });
-        return author.save();
+        return author.save(); // save data to db and RETURN that value
+      }
+    }, 
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        authorId: { type: GraphQLID }
+      },
+      resolve(parent, args){
+        let book = new Book({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId
+        });
+        return book.save();
       }
     }
   }
