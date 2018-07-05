@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { gql } from 'apollo-boost'; // parse graphql queries
+// import { gql } from 'apollo-boost'; // parse graphql queries
 import { graphql } from 'react-apollo'; // bind react to apollo
+import { getAuthorsQuery } from '../queries/queries';
 
-// queries template string
-const getAuthorsQuery = gql`
-  {
-    authors{
-      name
-      id
-    }
-  }
-`
+// // queries template string
+// const getAuthorsQuery = gql`
+//   {
+//     authors{
+//       name
+//       id
+//     }
+//   }
+// `
 class AddBook extends Component {
   displayAuthors(){
     var data = this.props.data;
