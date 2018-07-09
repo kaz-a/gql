@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { gql } from 'apollo-boost'; // parse graphql queries
 import { graphql } from 'react-apollo'; // bind react to apollo
 import { getBooksQuery } from '../queries/queries';
+import BookDetails from './BookDetails';
 
 // // queries template string
 // const getBooksQuery = gql`
@@ -36,6 +37,7 @@ class BookList extends Component {
         <ul id="book-list">
           { this.displayBooks() }
         </ul>
+        <BookDetails />
       </div>
     );
   }
