@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { gql } from 'apollo-boost'; // parse graphql queries
 import { graphql, compose } from 'react-apollo'; // bind react to apollo
-import { getAuthorsQuery, addBookMutation } from '../queries/queries';
+import { getAuthorsQuery, addBookMutation, getBooksQuery } from '../queries/queries';
 
 // // queries template string
 // const getAuthorsQuery = gql`
@@ -48,7 +48,9 @@ class AddBook extends Component {
         name: this.state.name,
         genre: this.state.genre,
         authorId: this.state.authorId
-      }
+      },
+      refetchQueries:[{ query: getBooksQuery }] 
+      // refetch from graphql server on mutation so that it renders added book without the need for browser refresh
     });
   }
 
