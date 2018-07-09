@@ -17,15 +17,15 @@ const getAuthorsQuery = gql`
     }
   }
 `
+
+// mutation that passes 3 parameters (! after type means nonNull)
 const addBookMutation = gql`
-  {
-    mutation{
-      addBook(name: "", genre: "", authorId: ""){
-        name
-        id
-      }
+  mutation($name: String!, $genre: String!, $authorId: ID!){ 
+    addBook(name: $name, genre: $genre, authorId: $authorId){
+      name
+      id
     }
-  }
+  } 
 `
 
 

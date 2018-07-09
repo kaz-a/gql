@@ -43,7 +43,13 @@ class AddBook extends Component {
     e.preventDefault();
     
     // mutation to the graphQL server
-    this.props.addBookMutation();
+    this.props.addBookMutation({
+      variables: {
+        name: this.state.name,
+        genre: this.state.genre,
+        authorId: this.state.authorId
+      }
+    });
   }
 
   render() {
